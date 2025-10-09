@@ -6,9 +6,9 @@ const productSchema = new Schema({
   imagen: { type: String },
   descripcion: { type: String },
   precio: { type: Number },
-  talles: [{ type: String }], // array de talles
+  talles: [{ type: String }],
   envio: { type: String },
-  mediosDePago: [{ type: String }], // array de medios de pago
+  mediosDePago: [{ type: String }],
 
   categories: [{type: Schema.Types.ObjectId, ref: "Category"}]
 });
