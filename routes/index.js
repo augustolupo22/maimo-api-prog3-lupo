@@ -1,10 +1,12 @@
 import express from "express";
+import productRoutes from "./products.js";
+import categoryRoutes from "./categories.js";
+import orderRoutes from "./orders.js";
+
 const router = express.Router();
 
-/* GET home page. */
-router.get("/", function (req, res) {
-  res.status(200).send({ message: "API Works!" });
-});
-
+router.use("/products", productRoutes);
+router.use("/categories", categoryRoutes);
+router.use("/orders", orderRoutes);
 
 export default router;
