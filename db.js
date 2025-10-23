@@ -1,34 +1,34 @@
 import mongoose from "mongoose";
 import chalk from "chalk";
-import "dotenv/config";
 
-// DB Connection
+const { DB_PROTOCOL, DB_HOST, DB_USER, DB_PASS, DB_NAME } = process.env;
+
 const connectDb = async () => {
-  let connectionString = process.env.DB_PROTOCOL;
-  if (process.env.DB_USER && process.env.DB_PASS) {
-    connectionString += `${process.env.DB_USER}:${process.env.DB_PASS}@`;
-  }
-  connectionString += `${process.env.DB_HOST}/${process.env.DB_NAME}`;
+  try {
+    let connectionString = `${DB_PROTOCOL}${DB_USER}:${DB_PASS}@${DB_HOST}/${DB_NAME}?retryWrites=true&w=majority`;
+    console.log(
+      chalk.blue("Intentando conectar a:"),
+      `${DB_PROTOCOL}${DB_HOST}/${DB_NAME}`
+    );
 
-  mongoose
-    .connect(`${connectionString}?retryWrites=true&w=majority`, {
+    await mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-    })
-    .then(() => console.log(chalk.green("Conected to database")))
-    .catch((err) =>
-      console.log(
-        chalk.bgRed.white("Database not connected", err.code, err.input)
-      )
-    );
+    });
+
+    console.log(chalk.green("Conectado a MongoDB Atlas"));
+  } catch (err) {
+    console.error(chalk.bgRed.white("Error de conexión a MongoDB:"));
+    console.error(err.message);
+  }
 };
 
 const disconnectDb = async () => {
   try {
     await mongoose.connection.close();
-    console.log(chalk.green("Disconnected from Database"));
+    console.log(chalk.yellow("🔌 Desconectado de MongoDB"));
   } catch (err) {
-    console.log(err);
+    console.error(chalk.red("Error al desconectarse:"), err);
   }
 };
 
