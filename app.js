@@ -32,13 +32,10 @@ app.use(
   })
 );
 
-/* Routes */
 app.use("/", indexRoutes);
-app.use("/products", productsRoutes);
+app.use("/products", productsRoutes); 
 app.use("/categories", categoriesRoutes);
 
-/* Error handler  */
-// catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
 });
@@ -48,7 +45,6 @@ app.use(function (err, req, res, next) {
   res.send({ message: err.message || "error" });
 });
 
-/* Starting server */
 app.listen(app.get("port"), () => {
   console.log(`Server on port ${app.get("port")}`);
 });
