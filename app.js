@@ -6,19 +6,15 @@ import indexRoutes from "./routes/index.js";
 import productsRoutes from "./routes/products.js";
 import categoriesRoutes from "./routes/categories.js";
 
-/* Clear the console  */
 console.log("\x1Bc");
 
 const app = express();
 
-// DB Connection
 import { connectDb } from "./db.js";
 connectDb();
 
-/* Settings */
 app.set("port", process.env.PORT || 4000);
 
-/* Middlewares */
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
